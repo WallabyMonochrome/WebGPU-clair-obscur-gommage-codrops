@@ -8,8 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "gsap": "^3.14.2",
     "three": "^0.181.0",
-    "three-msdf-text-utils": "^1.2.1"
+    "three-msdf-text-utils": "^1.2.1",
+    "tweakpane": "^4.0.5"
   },
   "devDependencies": {
     "vite": "^7.3.1"
