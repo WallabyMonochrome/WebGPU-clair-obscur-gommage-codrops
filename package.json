@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "three": "^0.181.0"
+    "three": "^0.181.0",
+    "three-msdf-text-utils": "^1.2.1"
   },
   "devDependencies": {
     "vite": "^7.3.1"

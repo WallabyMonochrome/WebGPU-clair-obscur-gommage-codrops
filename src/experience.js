@@ -1,5 +1,7 @@
-import * as THREE from "three/webgpu";
+//experience.js
 
+import * as THREE from "three/webgpu";
+import GommageOrchestrator from "./gommageOrchestrator.js";
 export class Experience {
 
   #threejs = null;
@@ -33,20 +35,20 @@ export class Experience {
     const far = 25;
     this.#camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     this.#camera.position.set(0, 0, 5);
+    // Call window resize to compute FOV
+    this.#onWindowResize_();
     this.#scene = new THREE.Scene();
-
-    this.createCube();
+    // Test MSDF Text
+    const gommageOrchestratorEntity = new GommageOrchestrator();
+    await gommageOrchestratorEntity.initialize(this.#scene);
   }
 
-  createCube() {
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    this.#cube = new THREE.Mesh(geometry, material);
-    this.#scene.add(this.#cube);
-  }
 
   #onWindowResize_() {
+    const HORIZONTAL_FOV_TARGET = THREE.MathUtils.degToRad(45);
     this.#camera.aspect = window.innerWidth / window.innerHeight;
+    const verticalFov = 2 * Math.atan(Math.tan(HORIZONTAL_FOV_TARGET / 2) / this.#camera.aspect);
+    this.#camera.fov = THREE.MathUtils.radToDeg(verticalFov);
     this.#camera.updateProjectionMatrix();
     this.#threejs.setSize(window.innerWidth, window.innerHeight);
   }
@@ -59,8 +61,6 @@ export class Experience {
 
   #raf() {
     requestAnimationFrame(t => {
-      this.#cube.rotation.x += 0.001;
-      this.#cube.rotation.y += 0.001;
       this.#render();
       this.#raf();
     });

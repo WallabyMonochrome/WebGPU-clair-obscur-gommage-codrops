@@ -3,3 +3,5 @@ node_modules
 .parcel-cache
 package-lock.json
 dist
+.vite
+.DS_Store
