@@ -3,34 +3,17 @@
 import * as THREE from "three/webgpu";
 import { MSDFTextGeometry, MSDFTextNodeMaterial } from "three-msdf-text-utils";
 import { texture, mix, uniform, clamp, pow, attribute, step, float, smoothstep } from "three/tsl";
-import Debug, { DEBUG_FOLDERS } from "./debug.js";
 
 export default class MSDFText {
     constructor() {
     }
 
-    async initialize(text = "WebGPU Gommage Effect", position = new THREE.Vector3(0, 0, 0), uProgress) {
+    #worldPositionBounds;
+
+    async initialize(text = "WebGPU Gommage Effect", position = new THREE.Vector3(0, 0, 0), uProgress, perlinTexture, fontAtlasTexture) {
         // Load font data
         const response = await fetch("/fonts/Cinzel/Cinzel.json");
         const fontData = await response.json();
-
-        // Load font atlas
-        const textureLoader = new THREE.TextureLoader();
-        const fontAtlasTexture = await textureLoader.loadAsync("/fonts/Cinzel/Cinzel.png");
-        fontAtlasTexture.colorSpace = THREE.NoColorSpace;
-        fontAtlasTexture.minFilter = THREE.LinearFilter;
-        fontAtlasTexture.magFilter = THREE.LinearFilter;
-        fontAtlasTexture.wrapS = THREE.ClampToEdgeWrapping;
-        fontAtlasTexture.wrapT = THREE.ClampToEdgeWrapping;
-        fontAtlasTexture.generateMipmaps = false;
-
-        const perlinTexture = await textureLoader.loadAsync("/textures/perlin.webp");
-        perlinTexture.colorSpace = THREE.NoColorSpace;
-        perlinTexture.minFilter = THREE.LinearFilter;
-        perlinTexture.magFilter = THREE.LinearFilter;
-        perlinTexture.wrapS = THREE.RepeatWrapping;
-        perlinTexture.wrapT = THREE.RepeatWrapping;
-        perlinTexture.generateMipmaps = false;
 
         // Create text geometry
         const textGeometry = new MSDFTextGeometry({
@@ -39,7 +22,6 @@ export default class MSDFText {
             width: 1000,
             align: "center",
         });
-        console.log(textGeometry.attributes);
 
         const textMaterial = this.createTextMaterial(fontAtlasTexture, perlinTexture, uProgress);
 
@@ -54,11 +36,25 @@ export default class MSDFText {
 
         mesh.scale.set(textScale, textScale, textScale);
         const meshOffset = -(textGeometry.layout.width / 2) * textScale;
+        
         mesh.position.set(position.x + meshOffset, position.y, position.z);
         mesh.rotation.x = Math.PI;
+        // Compute the world position bounds of our text
+        textGeometry.computeBoundingBox();
+        mesh.updateWorldMatrix(true, false);
+        this.#worldPositionBounds = new THREE.Box3().setFromObject(mesh);
         return mesh;
 
     }
+
+    getRandomPositionInMesh() {
+        const min = this.#worldPositionBounds.min;
+        const max = this.#worldPositionBounds.max;
+        const x = Math.random() * (max.x - min.x) + min.x;
+        const y = Math.random() * (max.y - min.y) + min.y;
+        const z = 0;
+        return new THREE.Vector3(x, y, z);
+      }
 
 
     createTextMaterial(fontAtlasTexture, perlinTexture, uProgress) {
