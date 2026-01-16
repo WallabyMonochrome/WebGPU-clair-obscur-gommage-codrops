@@ -1,7 +1,7 @@
 //dustParticles.js
 
 import * as THREE from "three/webgpu";
-import { attribute, uniform, positionLocal, texture, vec4, uv, time, vec2, vec3, clamp, sin, smoothstep, float } from "three/tsl";
+import { attribute, uniform, positionLocal, texture, vec4, uv, mrt, time, vec2, vec3, clamp, sin, smoothstep, float } from "three/tsl";
 
 export default class DustParticles {
     constructor() { }
@@ -103,7 +103,7 @@ export default class DustParticles {
         const turbulenceX = noiseSample.sub(0.5).mul(2);
         const turbulenceY = noiseSammpleBis.sub(0.5).mul(2);
     
-        const swirl = vec3(clamp(turbulenceX.mul(lifeInterpolation), 0.3, 1.0), turbulenceY.mul(lifeInterpolation), 0.0).mul(uWobbleAmp);
+        const swirl = vec3(clamp(turbulenceX.mul(lifeInterpolation), 0., 1.0), turbulenceY.mul(lifeInterpolation), 0.0).mul(uWobbleAmp);
         
         const windImpulse = uWindDirection.mul(uWindStrength).mul(dustAge);
 
@@ -123,6 +123,10 @@ export default class DustParticles {
         .add(driftMovement)
         .add(positionLocal.mul(aScale.mul(scaleFactor)));
         material.opacityNode = fadingOut;
+
+        material.mrtNode = mrt({
+          bloomIntensity: float(0.5).mul(fadingOut),
+        });
 
         return material;
     }

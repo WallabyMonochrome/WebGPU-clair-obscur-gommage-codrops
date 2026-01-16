@@ -1,7 +1,7 @@
 //petalParticles.js
 
 import * as THREE from "three/webgpu";
-import { attribute, uniform, positionLocal, texture, vec4, uv, mix, normalLocal, instanceIndex, normalize, abs, dot, time, vec2, vec3, clamp, smoothstep, float, pow, cos, sin, mat3, TWO_PI } from "three/tsl";
+import { attribute, uniform, positionLocal, texture, vec4, mrt, uv, mix, normalLocal, instanceIndex, normalize, abs, dot, time, vec2, vec3, clamp, smoothstep, float, pow, cos, sin, mat3, TWO_PI } from "three/tsl";
 
 export default class PetalParticles {
     constructor() { }
@@ -135,7 +135,7 @@ export default class PetalParticles {
         const turbulenceY = noiseSammpleBis.sub(0.5).mul(2);
         const turbulenceZ = noiseSample.sub(0.5).mul(2);
 
-        const swirl = vec3(clamp(turbulenceX.mul(lifeInterpolation), 0.3, 1.0), turbulenceY.mul(lifeInterpolation), 0.0).mul(uWobbleAmp);
+        const swirl = vec3(clamp(turbulenceX.mul(lifeInterpolation), 0., 1.0), turbulenceY.mul(lifeInterpolation), 0.0).mul(uWobbleAmp);
 
         // Bending
         const y = uv().y;
@@ -193,6 +193,10 @@ export default class PetalParticles {
         material.colorNode = petalColor.mul(facing);
         material.positionNode = worldPosition;
         material.opacityNode = fadingOut;
+
+        material.mrtNode = mrt({
+            bloomIntensity: float(0.7).mul(fadingOut),
+          });
 
         return material;
     }

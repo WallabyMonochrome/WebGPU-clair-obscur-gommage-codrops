@@ -2,7 +2,7 @@
 
 import * as THREE from "three/webgpu";
 import { MSDFTextGeometry, MSDFTextNodeMaterial } from "three-msdf-text-utils";
-import { texture, mix, uniform, clamp, pow, attribute, step, float, smoothstep } from "three/tsl";
+import { texture, mix, uniform, clamp, pow, attribute, step, float, smoothstep, mrt } from "three/tsl";
 
 export default class MSDFText {
     constructor() {
@@ -89,6 +89,9 @@ export default class MSDFText {
         textMaterial.colorNode = colorMix;
         const msdfOpacity = textMaterial.opacityNode;
         textMaterial.opacityNode = msdfOpacity.mul(dissolve);
+        textMaterial.mrtNode = mrt({
+            bloomIntensity: float(0.4).mul(dissolve),
+          });
 
         return textMaterial;
     }

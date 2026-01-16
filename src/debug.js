@@ -1,3 +1,5 @@
+//debug.js
+
 import { Pane } from "tweakpane";
 
 export const DEBUG_FOLDERS = {
@@ -7,7 +9,7 @@ export const DEBUG_FOLDERS = {
 
 class Debug {
     static instance = null;
-    static ENABLED = true;
+    static ENABLED = false;
 
     #pane = null;
     #baseFolder = null;

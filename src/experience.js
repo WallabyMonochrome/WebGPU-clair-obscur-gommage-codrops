@@ -2,18 +2,22 @@
 
 import * as THREE from "three/webgpu";
 import GommageOrchestrator from "./gommageOrchestrator.js";
+import { float, mrt, pass, output } from "three/tsl";
+import { bloom } from "three/examples/jsm/tsl/display/BloomNode.js";
+
 export class Experience {
 
   #threejs = null;
   #scene = null;
   #camera = null;
-  #cube = null;
+  #webgpuComposer = null;
 
   constructor() {}
 
   async initialize(container) {
     await this.#setupProject(container);
     window.addEventListener("resize",  this.#onWindowResize_.bind(this), false);
+    await this.#setupPostprocessing();
     this.#raf();
   }
 
@@ -43,6 +47,27 @@ export class Experience {
     await gommageOrchestratorEntity.initialize(this.#scene);
   }
 
+  async #setupPostprocessing() {
+    this.#webgpuComposer = new THREE.PostProcessing(this.#threejs);
+    const scenePass = pass(this.#scene, this.#camera);
+
+    scenePass.setMRT(
+      mrt({
+        output,
+        bloomIntensity: float(0),
+      })
+    );
+    let outNode = scenePass;
+
+    const outputPass = scenePass.getTextureNode();
+    const bloomIntensityPass = scenePass.getTextureNode('bloomIntensity');
+    const bloomPass = bloom(outputPass.mul(bloomIntensityPass), 0.8);
+    outNode = outNode.add(bloomPass);
+
+    this.#webgpuComposer.outputNode = outNode.renderOutput();
+    this.#webgpuComposer.needsUpdate = true;
+  }
+
 
   #onWindowResize_() {
     const HORIZONTAL_FOV_TARGET = THREE.MathUtils.degToRad(45);
@@ -55,7 +80,9 @@ export class Experience {
 
 
   #render() {
-    this.#threejs.render(this.#scene, this.#camera);
+    //this.#threejs.render(this.#scene, this.#camera);
+    this.#webgpuComposer.render();
+
   }
 
 

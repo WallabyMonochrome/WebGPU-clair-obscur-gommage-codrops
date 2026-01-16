@@ -67,6 +67,15 @@ export default class GommageOrchestrator {
         PetalButton.on("click", () => {
             this.#PetalParticlesEntity.debugSpawnPetal();
         });
+        // Use HTML buttons
+        const gommageButton = document.getElementById("gommage-button");
+        gommageButton.addEventListener("click", () => {
+            this.triggerGommage();
+        });
+        const resetButton = document.getElementById("reset-button");
+        resetButton.addEventListener("click", () => {
+            this.resetGommage();
+        });
     }
 
     async loadPetalGeometry() {
