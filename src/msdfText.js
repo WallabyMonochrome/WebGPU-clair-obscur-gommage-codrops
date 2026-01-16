@@ -52,7 +52,7 @@ export default class MSDFText {
         const max = this.#worldPositionBounds.max;
         const x = Math.random() * (max.x - min.x) + min.x;
         const y = Math.random() * (max.y - min.y) + min.y;
-        const z = 0;
+        const z = Math.random() * 0.5;
         return new THREE.Vector3(x, y, z);
       }
 
