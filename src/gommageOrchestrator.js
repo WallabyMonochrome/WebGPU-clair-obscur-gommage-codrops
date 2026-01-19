@@ -67,14 +67,12 @@ export default class GommageOrchestrator {
         PetalButton.on("click", () => {
             this.#PetalParticlesEntity.debugSpawnPetal();
         });
+
         // Use HTML buttons
-        const gommageButton = document.getElementById("gommage-button");
-        gommageButton.addEventListener("click", () => {
+        this.gommageButton = document.getElementById("gommage-button");
+        this.gommageButton.addEventListener("click", () => {
+            console.log("gommage button clicked");
             this.triggerGommage();
-        });
-        const resetButton = document.getElementById("reset-button");
-        resetButton.addEventListener("click", () => {
-            this.resetGommage();
         });
     }
 
@@ -116,6 +114,11 @@ export default class GommageOrchestrator {
     triggerGommage() {
         // Don't start if already running
         if (this.#gommageTween || this.#spawnDustTween || this.#spawnPetalTween) return;
+        this.#uProgress.value = 0;
+
+        // Disable button while effect is running
+        this.gommageButton.disabled = true;
+        this.gommageButton.classList.add("disabled");
 
         this.#spawnDustTween = gsap.to({}, {
             duration: this.#dustInterval,
@@ -144,7 +147,11 @@ export default class GommageOrchestrator {
                 this.#spawnPetalTween?.kill();
                 this.#spawnDustTween = null;
                 this.#gommageTween = null;
-                this.#spawnPetalTween = null
+                this.#spawnPetalTween = null;
+                gsap.delayedCall(1, () => {
+                    this.gommageButton.disabled = false;
+                    this.gommageButton.classList.remove("disabled");
+                });
             },
         });
     }

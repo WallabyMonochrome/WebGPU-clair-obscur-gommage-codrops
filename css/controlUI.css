@@ -36,6 +36,12 @@
             15px 100%);
     transition: transform 0.15s ease-out 0.05s;
     font-size: 2rem;
+    transition: opacity 0.15s ease-out 0.05s;
+
+    &.disabled {
+        opacity: 0.4;
+        cursor: default;
+    }
 
 }
 
@@ -62,21 +68,4 @@
             calc(15px + 0.5px) var(--borderSize),
             var(--borderSize) 50%);
     z-index: -1;
-}
-
-
-@media (max-width: 768px) {
-    .E33-button {
-        padding: 10px 24px;
-        font-size: 1rem;
-    }
-
-    #control-ui-container {
-        bottom: 60px;
-        gap: 16px;
-
-        .buttons-container {
-            gap: 10px;
-        }
-    }
 }

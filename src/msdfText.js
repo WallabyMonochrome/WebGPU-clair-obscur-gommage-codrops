@@ -66,8 +66,8 @@ export default class MSDFText {
         const glyphUv = attribute("glyphUv", "vec2");
         const center = attribute("center", "vec2");
 
-        const uNoiseRemapMin = uniform(0.4);
-        const uNoiseRemapMax = uniform(0.87);
+        const uNoiseRemapMin = uniform(0.48);
+        const uNoiseRemapMax = uniform(0.9);
         const uCenterScale = uniform(0.05);
         const uGlyphScale = uniform(0.75);
         const uDissolvedColor = uniform(new THREE.Color("#5E5E5E"));
