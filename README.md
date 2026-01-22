@@ -1,15 +1,7 @@
-_How to use this template:_
+# Clair Obscur: Expedition 33 WebGPU Gommage Effect | Codrops
 
-- Styles for the demo go in css/base.css
-- Add build instructions and credits to the README.md
-- For writing the tutorial, take a look at https://github.com/crnacura/CodropsTemplate/wiki/Writing-the-article
-- Delete this 'how to' intro in the final version and leave the following (fill in title/description, credits and social links of your likings, we'll do the rest):
+Dissolve an MSDF Text and build a particle system that can handle textures and 3D shapes using Three.js new shader language TSL.
 
----
-
-# Title of the demo
-
-_A description of the demo goes here._
 
 ![Image Title](https://generative-placeholders.glitch.me/image?width=800&height=600")
 
@@ -19,15 +11,29 @@ _A description of the demo goes here._
 
 ## Installation
 
-Run this demo on a [local server](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Tools_and_setup/set_up_a_local_testing_server).
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build locally
+npm run preview
+```
 
 ## Credits
 
-- Images generated with [Midjourney](https://midjourney.com)
+- [three-msdf-text-utils](https://github.com/leochocolat/three-msdf-text-utils) by Léo Mouraire
+- [msdf-bmfont-xml](https://github.com/soimy/msdf-bmfont-xml) by Shen Yiming
+- Perlin Texture from [Screaming Brain Studios](https://screamingbrainstudios.com/downloads/)
 
 ## Misc
 
-Follow _Author_: [Twitter](), [Instagram](), [GitHub]() ...
+Thibault Introvigne: [X](https://x.com/Thibault_Intro), [LinkedIn](https://www.linkedin.com/in/thibault-introvigne/), [Portfolio](https://www.thibault-introvigne.com/)
 
 Follow Codrops: [X](http://www.x.com/codrops), [Facebook](https://www.facebook.com/codrops), [Instagram](https://www.instagram.com/codropsss/), [LinkedIn](https://www.linkedin.com/company/codrops/), [GitHub](https://github.com/codrops)
 
