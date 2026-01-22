@@ -3,7 +3,7 @@
 Dissolve an MSDF Text and build a particle system that can handle textures and 3D shapes using Three.js new shader language TSL.
 
 
-![Image Title](https://generative-placeholders.glitch.me/image?width=800&height=600")
+![Image Title](https://raw.githubusercontent.com/WallabyMonochrome/WebGPU-clair-obscur-gommage-codrops/refs/heads/master/public/preview.png?token=GHSAT0AAAAAADSDLRVVJW35LVC5EQYWFQKA2LSOAVQ)
 
 [Article on Codrops](https://tympanus.net/codrops/?p=)
 
