@@ -2,7 +2,7 @@
 
 Dissolve an MSDF Text and build a particle system that can handle textures and 3D shapes using Three.js new shader language TSL.
 
-![Image Title]()
+![Image Title](https://tympanus.net/codrops/wp-content/uploads/2026/01/gommage.webp)
 
 [Article on Codrops](https://tympanus.net/codrops/?p=107900)
 
