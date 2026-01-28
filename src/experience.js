@@ -1,12 +1,11 @@
 //experience.js
 
-import * as THREE from "three/webgpu";
-import GommageOrchestrator from "./gommageOrchestrator.js";
-import { float, mrt, pass, output } from "three/tsl";
-import { bloom } from "three/examples/jsm/tsl/display/BloomNode.js";
+import * as THREE from 'three/webgpu';
+import GommageOrchestrator from './gommageOrchestrator.js';
+import { float, mrt, pass, output } from 'three/tsl';
+import { bloom } from 'three/examples/jsm/tsl/display/BloomNode.js';
 
 export class Experience {
-
   #threejs = null;
   #scene = null;
   #camera = null;
@@ -16,7 +15,7 @@ export class Experience {
 
   async initialize(container) {
     await this.#setupProject(container);
-    window.addEventListener("resize",  this.#onWindowResize_.bind(this), false);
+    window.addEventListener('resize', this.#onWindowResize_.bind(this), false);
     await this.#setupPostprocessing();
     this.#raf();
   }
@@ -68,7 +67,6 @@ export class Experience {
     this.#webgpuComposer.needsUpdate = true;
   }
 
-
   #onWindowResize_() {
     const HORIZONTAL_FOV_TARGET = THREE.MathUtils.degToRad(45);
     this.#camera.aspect = window.innerWidth / window.innerHeight;
@@ -78,20 +76,17 @@ export class Experience {
     this.#threejs.setSize(window.innerWidth, window.innerHeight);
   }
 
-
   #render() {
     //this.#threejs.render(this.#scene, this.#camera);
     this.#webgpuComposer.render();
-
   }
 
-
   #raf() {
-    requestAnimationFrame(t => {
+    requestAnimationFrame((t) => {
       this.#render();
       this.#raf();
     });
   }
 }
 
-new Experience().initialize(document.querySelector("#canvas-container"));
+new Experience().initialize(document.querySelector('#canvas-container'));

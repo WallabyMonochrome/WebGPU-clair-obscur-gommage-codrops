@@ -1,13 +1,12 @@
-# Clair Obscur: Expedition 33 WebGPU Gommage Effect | Codrops
+# Clair Obscur: Expedition 33 WebGPU Gommage Effect
 
 Dissolve an MSDF Text and build a particle system that can handle textures and 3D shapes using Three.js new shader language TSL.
 
+![Image Title]()
 
-![Image Title](https://raw.githubusercontent.com/WallabyMonochrome/WebGPU-clair-obscur-gommage-codrops/refs/heads/master/public/preview.png?token=GHSAT0AAAAAADSDLRVVJW35LVC5EQYWFQKA2LSOAVQ)
+[Article on Codrops](https://tympanus.net/codrops/?p=107900)
 
-[Article on Codrops](https://tympanus.net/codrops/?p=)
-
-[Demo](https://tympanus.net/Tutorials/.../)
+[Demo](https://tympanus.net/Tutorials/WebGPUGommage/)
 
 ## Installation
 
